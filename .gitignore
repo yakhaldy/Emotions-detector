@@ -45,3 +45,7 @@ wheels/
 .DS_Store
 Thumbs.db
 
+#cvs
+/data/*.csv
+
+

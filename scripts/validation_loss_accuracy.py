@@ -25,7 +25,7 @@ def plot_validation_loss_accuracy(history, save_path):
     plt.tight_layout()
     plt.savefig(save_path, dpi=120)
     plt.close(fig)
-    print(f"📈 Learning curves saved → {save_path}")
+    print(f"Learning curves saved → {save_path}")
 
 
 

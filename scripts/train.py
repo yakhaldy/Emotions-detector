@@ -154,7 +154,7 @@ tensorboard_cb = TensorBoard(
 print(f"\nTensorBoard: tensorboard --logdir results/logs")
 
 # ===============================================================
-# 10. Training — epochs أكثر
+# 10. Training 
 # ===============================================================
 print("\n==> Training started...")
 history = model.fit(
