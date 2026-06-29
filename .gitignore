@@ -50,3 +50,6 @@ Thumbs.db
 
 /data/*.gz
 
+data/
+results/logs/
+results/model/final_emotion_model.keras
