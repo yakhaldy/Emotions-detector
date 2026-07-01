@@ -106,9 +106,7 @@ model.compile(
     metrics=["accuracy"],
 )
 
-# ===============================================================
-# 9. Callbacks
-# ===============================================================
+
 early_stop = EarlyStopping(
     monitor="val_loss",
     patience=10,              
@@ -137,9 +135,7 @@ tensorboard_cb = TensorBoard(
 
 print(f"\nTensorBoard: tensorboard --logdir results/logs")
 
-# ===============================================================
-# 10. Training 
-# ===============================================================
+
 print("\n==> Training started...")
 history = model.fit(
     datagen.flow(X_train, y_train, batch_size=32),
@@ -150,25 +146,19 @@ history = model.fit(
     verbose=1,
 )
 
-# ===============================================================
-# 11. Final Evaluation
-# ===============================================================
+
 print("\n==> Evaluating...")
 loss, acc = model.evaluate(X_test, y_test, verbose=1)
 print(f"\nFinal Accuracy : {acc*100:.2f}%")
 print(f"   Final Loss     : {loss:.4f}")
 
-# ===============================================================
-# 12. Save Model
-# ===============================================================
+
 os.makedirs(os.path.join("results", "model"), exist_ok=True)
 MODEL_PATH = os.path.join("results", "model", "final_emotion_model.keras")
 model.save(MODEL_PATH)
 print(f"\nModel saved → {MODEL_PATH}")
 
-# ===============================================================
-# 13. Save Architecture
-# ===============================================================
+
 ARCH_PATH = os.path.join("results", "model", "final_emotion_model_arch.txt")
 with open(ARCH_PATH, "w") as f:
     f.write("=== CNN v2 Architecture (CPU-friendly, target 60%+) ===\n\n")
@@ -192,9 +182,7 @@ with open(ARCH_PATH, "w") as f:
     f.write(f"Final test accuracy : {acc:.4f}\n")
 print(f"Architecture saved → {ARCH_PATH}")
 
-# ===============================================================
-# 14. Learning Curves
-# ===============================================================
+
 CURVES_PATH = os.path.join("results", "model", "learning_curves.png")
 plot_validation_loss_accuracy(history, CURVES_PATH)
 

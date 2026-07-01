@@ -16,7 +16,6 @@ face_cascade = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
-# Webcam d'abord ; fallback sur la video enregistree si indispo (sujet l. 67)
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print(f"Webcam unavailable, falling back to {FALLBACK_VIDEO}", file=sys.stderr)
@@ -28,10 +27,10 @@ if not cap.isOpened():
 print("Reading video stream ...")
 print()
 
-last_pred = 0.0           # >=1 prediction/s (sujet l. 67)
-last_label = None         # cache pour afficher entre 2 inferences
+last_pred = 0.0          
+last_label = None        
 last_confidence = 0
-last_box = None           # (x, y, w, h) du dernier visage detecte
+last_box = None        
 
 try:
     while True:
@@ -42,7 +41,6 @@ try:
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
 
-        # ----- Inference cadencee a 1/s -----
         now = time.monotonic()
         if now - last_pred >= 1.0:
             last_pred = now
@@ -69,7 +67,6 @@ try:
                 print(f"{ts}s : {last_label} , {last_confidence}%")
                 print()
 
-        # ----- Affichage fenetre a chaque frame (fluide) -----
         if last_box is not None and last_label is not None:
             x, y, w, h = last_box
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)

@@ -175,11 +175,6 @@ keras==3.12.2
 python ./scripts/train.py
 ```
 
-**Train the transfer-learning variant (optional):**
-```bash
-python ./scripts/train_pretrained.py
-```
-
 **Evaluate on the test set:**
 ```bash
 python ./scripts/predict.py
