@@ -17,26 +17,18 @@ from sklearn.utils.class_weight import compute_class_weight
 from preprocess import load_data, preprocess_pixels
 from validation_loss_accuracy import plot_validation_loss_accuracy
 
-
-# ===============================================================
-# 2. Load Data 
-# ===============================================================
 print("\n==> Loading data...")
 data = load_data("data/train.csv")
 print(f"Total samples: {len(data)}")
 
-# ===============================================================
-# 3. Preprocess
-# ===============================================================
+
 print("\n==> Preprocessing images...")
 X = preprocess_pixels(data["pixels"].values)
 y = data["emotion"].to_numpy()
 print(f"X shape: {X.shape}")
 print(f"y shape: {y.shape}")
 
-# ===============================================================
-# 4. Split Data — 80% train, 20% test
-# ===============================================================
+
 print("\n==> Splitting data...")
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
@@ -47,9 +39,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"Training samples : {len(X_train)}")
 print(f"Test samples     : {len(X_test)}")
 
-# ===============================================================
-# 5. Class Weights
-# ===============================================================
+
 print("\n==> Computing class weights...")
 class_weights_array = compute_class_weight(
     class_weight="balanced",
@@ -59,9 +49,7 @@ class_weights_array = compute_class_weight(
 class_weights = dict(enumerate(class_weights_array))
 print(f"Class weights: {class_weights}")
 
-# ===============================================================
-# 6. Data Augmentation — 
-# ===============================================================
+
 print("\n==> Setting up data augmentation...")
 datagen = ImageDataGenerator(
     horizontal_flip=True,    
@@ -70,9 +58,7 @@ datagen = ImageDataGenerator(
 )
 datagen.fit(X_train)
 
-# ===============================================================
-# 7. Model Architecture — 
-# ===============================================================
+
 print("\n==> Building model...")
 model = Sequential()
 
@@ -83,7 +69,7 @@ model.add(Conv2D(32, (3, 3), padding="same", activation="relu"))
 model.add(BatchNormalization())
 model.add(Conv2D(32, (3, 3), padding="same", activation="relu")) 
 model.add(BatchNormalization())
-model.add(MaxPooling2D(2, 2))   # 48x48 → 24x24
+model.add(MaxPooling2D(2, 2))
 model.add(Dropout(0.25))
 
 
@@ -91,7 +77,7 @@ model.add(Conv2D(64, (3, 3), padding="same", activation="relu"))
 model.add(BatchNormalization())
 model.add(Conv2D(64, (3, 3), padding="same", activation="relu")) 
 model.add(BatchNormalization())
-model.add(MaxPooling2D(2, 2))   # 24x24 → 12x12
+model.add(MaxPooling2D(2, 2))
 model.add(Dropout(0.25))
 
 
@@ -113,9 +99,7 @@ model.add(Dense(7, activation="softmax"))
 
 model.summary()
 
-# ===============================================================
-# 8. Compilation
-# ===============================================================
+
 model.compile(
     optimizer=Adam(learning_rate=0.001),
     loss="sparse_categorical_crossentropy",
